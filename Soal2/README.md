@@ -19,7 +19,7 @@ Clone the repository:
 git clone https://github.com/gerryfernando/logique.git
 ```
 
-Change directory
+Change directory to Soal2
 
 ```bash
 npm install
