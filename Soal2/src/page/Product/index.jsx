@@ -1,26 +1,24 @@
 /* eslint-disable no-unused-vars */
 import { Box, Grid, Stack } from "@mui/material";
-import { enqueueSnackbar } from "notistack";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import MainLayout from "../../component/Layout";
 import TypographyCom from "../../component/TypographyCom";
 import API from "../../service";
 import Card from "./component/Card";
-import MainLayout from "../../component/Layout";
+
+const getProduct = async () => {
+  const res = await API.get("products");
+  return res.data;
+};
 
 const Product = (props) => {
-  const [data, setData] = useState([]);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["products"],
+    queryFn: getProduct,
+  });
 
-  const getProduct = async () => {
-    try {
-      const res = await API.get("products");
-      setData(res.data);
-    } catch (error) {
-      enqueueSnackbar("Failed to get data", { variant: "error" });
-    }
-  };
-  useEffect(() => {
-    getProduct();
-  }, []);
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error </p>;
 
   return (
     <MainLayout>
