@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { MenuBook, Menu as MenuIcon } from "@mui/icons-material";
+import { Menu as MenuIcon } from "@mui/icons-material";
 import TypographyCom from "../TypographyCom";
 
 const pages = ["Menu", "Cart"];
@@ -64,7 +64,6 @@ const Navbar = (props) => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box mr={2} sx={{ display: { xs: "none", md: "flex" } }}>
-            <MenuBook sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
             <TypographyCom
               noWrap
               color="#fff"
@@ -87,7 +86,7 @@ const Navbar = (props) => {
                 },
               }}
             >
-              MY-MENU
+              Store
             </TypographyCom>
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -149,7 +148,6 @@ const Navbar = (props) => {
               ))}
             </Menu>
           </Box>
-          <MenuBook sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             color="#fff"
             bold
@@ -166,7 +164,7 @@ const Navbar = (props) => {
               textDecoration: "none",
             }}
           >
-            MY-MENU
+            Store
           </Typography>
 
           <Stack gap={2} direction="row" alignItems="center">

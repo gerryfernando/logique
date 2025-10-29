@@ -2,7 +2,7 @@ const convertNumberCurrency = (val) => {
   if (!val) {
     return "";
   }
-  return `Rp. ${new Intl.NumberFormat("id-ID").format(val)}`;
+  return `$ ${new Intl.NumberFormat("en-US").format(val)}`;
 };
 
 export default convertNumberCurrency;

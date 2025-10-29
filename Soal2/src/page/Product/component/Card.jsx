@@ -6,16 +6,21 @@ import {
   CardContent,
   CardMedia,
   useTheme,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+  Divider,
 } from "@mui/material";
 import React, { useState } from "react";
 import convertNumberCurrency from "../../../util/Currency";
 import ModalCom from "../../../component/ModalCom";
-import PlusMinusInput from "../../../component/PlusMinusInput";
 import TypographyCom from "../../../component/TypographyCom";
 import { enqueueSnackbar } from "notistack";
 import { AddShoppingCart } from "@mui/icons-material";
 import API from "../../../service";
 import { useSelector } from "react-redux";
+import PlusMinusInput from "../../../component/PlusMinusInput";
 
 const Card = (props) => {
   const { data } = props;
@@ -24,39 +29,18 @@ const Card = (props) => {
   const table = useSelector((state) => state.appState.tableNo);
   const [sum, setSum] = useState(0);
 
-  const addCart = async () => {
-    if (sum === 0) {
-      enqueueSnackbar("Please input at least 1 to order", {
-        variant: "warning",
-      });
-    } else if (sum > 0) {
-      try {
-        const body = {
-          menuId: data.id,
-          tableId: table,
-          qty: sum,
-        };
-        await API.post("cart", body);
-        enqueueSnackbar("Add cart success", { variant: "success" });
-      } catch (error) {
-        enqueueSnackbar("Failed to add cart", { variant: "error" });
-      } finally {
-        setOpenModal(false);
-        setSum(0);
-      }
-    }
-  };
   return (
     <Box>
       <MUICard sx={{ maxWidth: 345 }}>
-        <CardMedia
-          sx={{ height: 140 }}
-          image={data?.image_url}
-          title={data.name}
-        />
+        <CardMedia sx={{ height: 140 }} image={data?.images[0]} />
         <CardContent>
-          <TypographyCom gutterBottom variant="h5" component="div">
-            {data.name}
+          <TypographyCom
+            sx={{ height: 75 }}
+            gutterBottom
+            variant="h5"
+            component="div"
+          >
+            {data?.title}
           </TypographyCom>
           <TypographyCom variant="body2" color="text.secondary">
             {convertNumberCurrency(data.price || 0)}
@@ -69,9 +53,8 @@ const Card = (props) => {
             fullWidth
             size="small"
             onClick={() => setOpenModal(true)}
-            startIcon={<AddShoppingCart />}
           >
-            Add to Cart
+            Detail
           </Button>
         </CardActions>
       </MUICard>
@@ -80,13 +63,42 @@ const Card = (props) => {
         key="modal-add-order"
         open={openModal}
         onClose={() => setOpenModal(false)}
-        title={`${data.name}`}
+        title="Product Detail"
         size="xs"
-        onConfirm={() => {
-          addCart();
-        }}
+        okText="Add To Cart"
+        onConfirm={() => {}}
+        sum={sum}
+        setSum={setSum}
       >
-        <PlusMinusInput sum={sum} setSum={setSum} />
+        <List
+          sx={{
+            width: "100%",
+            borderRadius: 2,
+          }}
+        >
+          <ListItem>
+            <ListItemText primary="Name" secondary={data.title} />
+          </ListItem>
+
+          <ListItem>
+            <ListItemText primary="Description" secondary={data.description} />
+          </ListItem>
+
+          <ListItem>
+            <ListItemText
+              primary="Price"
+              secondary={
+                <TypographyCom
+                  variant="body1"
+                  color="primary"
+                  fontWeight="bold"
+                >
+                  {convertNumberCurrency(data.price || 0)}
+                </TypographyCom>
+              }
+            />
+          </ListItem>
+        </List>
       </ModalCom>
     </Box>
   );

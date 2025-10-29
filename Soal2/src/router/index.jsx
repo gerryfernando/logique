@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import Cart from "../page/Cart";
 import ErrorPage from "../page/ErrorPage";
-import Menu from "../page/Menu";
+import Product from "../page/Product";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Menu />,
+    element: <Product />,
     errorElement: <ErrorPage />,
   },
   {

@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-vars */
 import { Box, Grid, Stack } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import TypographyCom from "../../component/TypographyCom";
-import Card from "./component/Card";
-import API from "../../service";
 import { enqueueSnackbar } from "notistack";
+import { useEffect, useState } from "react";
+import TypographyCom from "../../component/TypographyCom";
+import API from "../../service";
+import Card from "./component/Card";
 
-const Menu = (props) => {
+const Product = (props) => {
   const [data, setData] = useState([]);
 
-  const getMenu = async () => {
+  const getProduct = async () => {
     try {
       const res = await API.get("products");
       console.log(res.data);
@@ -19,13 +19,13 @@ const Menu = (props) => {
     }
   };
   useEffect(() => {
-    getMenu();
+    getProduct();
   }, []);
 
   return (
     <Box>
       <Stack gap={8}>
-        <TypographyCom title>Menu Page</TypographyCom>
+        <TypographyCom title>Product Page</TypographyCom>
 
         <Grid container spacing={3}>
           {data.map((val) => {
@@ -41,4 +41,4 @@ const Menu = (props) => {
   );
 };
 
-export default Menu;
+export default Product;

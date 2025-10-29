@@ -21,7 +21,7 @@ const Footer = (props) => {
         display="flex"
       >
         <Grid item>
-          <TypographyCom>Website Food Order version 0.0.1</TypographyCom>
+          <TypographyCom>Website Store 0.0.1</TypographyCom>
         </Grid>
       </Grid>
     </Box>

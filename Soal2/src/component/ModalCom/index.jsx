@@ -9,6 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import TypographyCom from "../TypographyCom";
+import PlusMinusInput from "../PlusMinusInput";
 
 const ModalCom = ({
   open,
@@ -25,6 +26,8 @@ const ModalCom = ({
   loading,
   error,
   disableOkButton = false,
+  sum,
+  setSum,
 }) => {
   return (
     <Dialog
@@ -34,7 +37,6 @@ const ModalCom = ({
           borderRadius: "10px",
           boxShadow: "1px 1px 8px rgb(0,0,0,0.5)",
           padding: "20px",
-          maxHeight: "85vh",
         },
       }}
       onClose={(event, reason) => {
@@ -63,20 +65,15 @@ const ModalCom = ({
       </DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
-        <Grid container columnSpacing={1} mt="40px">
-          <Grid item xs={12} sx={{ textAlign: "right", py: 1, pr: 2 }}>
-            <Button
-              loading={loading}
-              variant="outlined"
-              size="medium"
-              sx={{ mr: 1, borderRadius: "10px", paddingX: 4 }}
-              startIcon={isIcon && <CancelRounded />}
-              onClick={onClose}
-              type="button"
-            >
-              <span> {cancelText || "Cancel"}</span>
-            </Button>
+        <Grid
+          container
+          columnSpacing={1}
+          justifyContent="center"
+          display="flex"
+        >
+          <PlusMinusInput sum={sum} setSum={setSum} />
 
+          <Grid mt={2} item xs={12} sx={{ textAlign: "right", py: 1, pr: 2 }}>
             <Button
               loading={loading}
               startIcon={isIcon && <CheckCircleRounded />}
@@ -87,6 +84,7 @@ const ModalCom = ({
                 mr: 1,
                 borderRadius: "10px",
                 paddingX: 4,
+                width: "100%",
               }}
               variant="contained"
               onClick={onConfirm}
