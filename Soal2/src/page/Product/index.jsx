@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { Box, Grid, Stack } from "@mui/material";
+import { Box, Grid, Input, Stack } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import MainLayout from "../../component/Layout";
 import TypographyCom from "../../component/TypographyCom";
 import API from "../../service";
 import Card from "./component/Card";
+import { useState } from "react";
 
 const getProduct = async () => {
   const res = await API.get("products");
@@ -12,6 +13,7 @@ const getProduct = async () => {
 };
 
 const Product = (props) => {
+  const [search, setSearch] = useState("");
   const { data, isLoading, isError } = useQuery({
     queryKey: ["products"],
     queryFn: getProduct,
@@ -19,15 +21,23 @@ const Product = (props) => {
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error </p>;
-
+  const filteredProducts = data.filter(
+    (val) =>
+      val.title.toLowerCase().includes(search.toLowerCase()) ||
+      val.category.name.toLowerCase().includes(search.toLowerCase())
+  );
   return (
     <MainLayout>
       <Box>
         <Stack gap={8}>
           <TypographyCom title>Product Page</TypographyCom>
-
+          <Input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search Product or Category Name"
+          />
           <Grid container spacing={3}>
-            {data.map((val) => {
+            {filteredProducts.map((val) => {
               return (
                 <Grid item xs={12} sm={4} md={3}>
                   <Card data={val} />

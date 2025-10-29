@@ -56,12 +56,12 @@ const Card = (props) => {
         <CardMedia sx={{ height: 140 }} image={data?.images[0]} />
         <CardContent>
           <TypographyCom
-            sx={{ height: 75 }}
+            sx={{ height: 65 }}
             gutterBottom
             variant="h5"
             component="div"
           >
-            {data?.title}
+            {data?.title} ({data?.category.name})
           </TypographyCom>
           <TypographyCom variant="body2" color="text.secondary">
             {convertNumberCurrency(data.price || 0)}
