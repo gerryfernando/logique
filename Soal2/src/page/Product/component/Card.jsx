@@ -63,7 +63,7 @@ const Card = (props) => {
           >
             {data?.title} ({data?.category.name})
           </TypographyCom>
-          <TypographyCom variant="body2" color="text.secondary">
+          <TypographyCom variant="body2" fontSize={22} color="text.secondary">
             {convertNumberCurrency(data.price || 0)}
           </TypographyCom>
         </CardContent>
