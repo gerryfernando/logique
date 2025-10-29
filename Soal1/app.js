@@ -67,3 +67,17 @@ $(document).ready(function () {
     `);
   });
 });
+
+$(document).ready(function () {
+  $(".avatar").click(function () {
+    $(".avatar").removeClass("active");
+
+    $(this).addClass("active");
+
+    const newName = $(this).data("name");
+    const newRole = $(this).data("role");
+
+    $("#mainName").text(newName);
+    $("#mainRole").text(newRole);
+  });
+});
