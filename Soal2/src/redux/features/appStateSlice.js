@@ -2,19 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 
 //init
 const initialState = {
-  tableNo: 1,
+  cart: [],
 };
 
 export const appStateSlice = createSlice({
   name: "appState",
   initialState,
   reducers: {
-    setTable: (state, action) => {
-      state.tableNo = action.payload;
+    setCart: (state, action) => {
+      state.cart = action.payload;
     },
   },
 });
 
-export const { setTable } = appStateSlice.actions;
+export const { setCart } = appStateSlice.actions;
 
 export default appStateSlice.reducer;

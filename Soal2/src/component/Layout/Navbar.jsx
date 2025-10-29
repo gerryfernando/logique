@@ -10,9 +10,11 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import TypographyCom from "../TypographyCom";
+import { Link } from "react-router-dom";
 
 const pages = ["Menu", "Cart"];
 
@@ -42,6 +44,7 @@ const styleMenu = {
   },
 };
 const Navbar = (props) => {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -63,44 +66,12 @@ const Navbar = (props) => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box mr={2} sx={{ display: { xs: "none", md: "flex" } }}>
-            <TypographyCom
-              noWrap
-              color="#fff"
-              bold
-              fontSize="18px"
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-                cursor: "pointer",
-                "&:hover": {
-                  color: "inherit",
-                  textDecoration: "none",
-                },
-              }}
-            >
-              Store
-            </TypographyCom>
-          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Stack gap={2} direction="row">
               {pages.map((page) => (
-                <TypographyCom
-                  component="a"
-                  href={handleRoute(page)}
-                  color="#fff"
-                  textAlign="center"
-                  sx={styleMenu}
-                >
+                <Link style={{ cursor: "pointer" }} to={handleRoute(page)}>
                   {page}
-                </TypographyCom>
+                </Link>
               ))}
             </Stack>
           </Box>

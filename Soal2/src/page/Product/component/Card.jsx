@@ -1,33 +1,54 @@
 import {
   Box,
   Button,
-  Card as MUICard,
   CardActions,
   CardContent,
   CardMedia,
-  useTheme,
   List,
   ListItem,
   ListItemText,
-  Typography,
-  Divider,
+  Card as MUICard,
+  useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
-import convertNumberCurrency from "../../../util/Currency";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ModalCom from "../../../component/ModalCom";
 import TypographyCom from "../../../component/TypographyCom";
+import convertNumberCurrency from "../../../util/Currency";
+import { setCart } from "../../../redux/features/appStateSlice";
 import { enqueueSnackbar } from "notistack";
-import { AddShoppingCart } from "@mui/icons-material";
-import API from "../../../service";
-import { useSelector } from "react-redux";
-import PlusMinusInput from "../../../component/PlusMinusInput";
 
 const Card = (props) => {
   const { data } = props;
+  const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const theme = useTheme();
   const table = useSelector((state) => state.appState.tableNo);
   const [sum, setSum] = useState(0);
+  const { cart } = useSelector((state) => state?.appState);
+  const addCart = async () => {
+    const newData = {
+      id: data.id,
+      data,
+      sum,
+    };
+    const existingData = cart.findIndex((val) => val.id === data.id);
+    let newCart = [...cart];
+
+    if (existingData !== -1) {
+      newCart[existingData] = {
+        ...newCart[existingData],
+        sum: newCart[existingData].sum + sum,
+      };
+    } else {
+      newCart.push(newData);
+    }
+
+    await dispatch(setCart(newCart));
+    enqueueSnackbar("Success add to cart", { variant: "success" });
+    setOpenModal(false);
+    setSum(0);
+  };
 
   return (
     <Box>
@@ -62,12 +83,16 @@ const Card = (props) => {
       <ModalCom
         key="modal-add-order"
         open={openModal}
-        onClose={() => setOpenModal(false)}
+        onClose={() => {
+          setSum(0);
+          setOpenModal(false);
+        }}
         title="Product Detail"
         size="xs"
         okText="Add To Cart"
-        onConfirm={() => {}}
+        onConfirm={() => addCart()}
         sum={sum}
+        disableOkButton={sum === 0}
         setSum={setSum}
       >
         <List

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import TypographyCom from "../../component/TypographyCom";
 import API from "../../service";
 import Card from "./component/Card";
+import MainLayout from "../../component/Layout";
 
 const Product = (props) => {
   const [data, setData] = useState([]);
@@ -12,7 +13,6 @@ const Product = (props) => {
   const getProduct = async () => {
     try {
       const res = await API.get("products");
-      console.log(res.data);
       setData(res.data);
     } catch (error) {
       enqueueSnackbar("Failed to get data", { variant: "error" });
@@ -23,21 +23,23 @@ const Product = (props) => {
   }, []);
 
   return (
-    <Box>
-      <Stack gap={8}>
-        <TypographyCom title>Product Page</TypographyCom>
+    <MainLayout>
+      <Box>
+        <Stack gap={8}>
+          <TypographyCom title>Product Page</TypographyCom>
 
-        <Grid container spacing={3}>
-          {data.map((val) => {
-            return (
-              <Grid item xs={12} sm={4} md={3}>
-                <Card data={val} />
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Stack>
-    </Box>
+          <Grid container spacing={3}>
+            {data.map((val) => {
+              return (
+                <Grid item xs={12} sm={4} md={3}>
+                  <Card data={val} />
+                </Grid>
+              );
+            })}
+          </Grid>
+        </Stack>
+      </Box>
+    </MainLayout>
   );
 };
 

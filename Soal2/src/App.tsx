@@ -1,24 +1,21 @@
 import { ThemeProvider } from "@emotion/react";
-import "./App.css";
-import MainLayout from "./component/Layout";
-import theme from "./theme/base";
-import { RouterProvider } from "react-router-dom";
-import router from "./router";
-import SnackBarProvider from "./component/SnackbarProvider";
 import { Provider } from "react-redux";
+import { RouterProvider } from "react-router-dom";
+import "./App.css";
+import SnackBarProvider from "./component/SnackbarProvider";
 import { store } from "./redux/store";
+import router from "./router";
+import theme from "./theme/base";
 
 function App() {
   return (
     <div className="App">
       <Provider store={store}>
-        <MainLayout>
-          <SnackBarProvider>
-            <ThemeProvider theme={theme}>
-              <RouterProvider router={router} />
-            </ThemeProvider>
-          </SnackBarProvider>
-        </MainLayout>
+        <SnackBarProvider>
+          <ThemeProvider theme={theme}>
+            <RouterProvider router={router} />
+          </ThemeProvider>
+        </SnackBarProvider>
       </Provider>
     </div>
   );
